@@ -19,13 +19,15 @@ a{
   width: 1170px;
   margin: 0 auto;
 }
+
 .clearfix{
   content: '';
   display: block;
   clear: both;
 }
+
 header{
-  height:130px;
+  height:175px;
   border-bottom: 0.5px solid black;
   position: fixed;
   width: 100%;
@@ -36,7 +38,7 @@ header{
 
 h1{
   color: black;
-  line-height: 100px;
+  line-height: 125px;
   float: left;
 }
 .menu{
@@ -46,7 +48,7 @@ h1{
   float: left;
 }
 .menu a{
-  line-height: 100px;
+  line-height: 110px;
   color: black;
   padding: 0 15px;
   display: block;
