@@ -1,98 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head(title)">
-  <!-- Required meta tags -->
+<html lang="en" dir="ltr">
+<head>
   <meta charset="utf-8">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link href="starter-template.css" th:href="@{/starter-template.css}" rel="stylesheet">
+  <title>서울에서 집 구하기</title>
   <link rel="stylesheet" href="../css/style.css">
-  <br><br>
 </head>
 <body>
 <header>
   <div class="wrapper">
-    <h1 style="font-size:32px; line-height: 140px;">HARI SEOUL</h1>
+    <h1>HARI SEOUL</h1>
     <ul class="menu">
-      <li><a style="line-height: 135px; color: black;
-  padding: 0 15px;
-  display: block;" href="index.html">HOME</a></li>
-      <li><a style="line-height: 130px;
-  color: black;
-  padding: 0 15px;
-  display: block;" href="#">매물</a></li>
-      <li><a style="line-height: 130px;
-  color: black;
-  padding: 0 15px;
-  display: block;" href="javascript:void(0)" class="dropbtn" onclick="myFunction()">COMMUNITY</a>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="javascript:void(0)" class="dropbtn" onclick="myFunction()">매물</a>
         <div class="dropdown-content" id="myDropdown">
-          <a href="board.html">원룸</a>
+          <a href="#">원룸</a>
           <a href="#">투룸</a>
           <a href="#">오피스텔</a>
+          <a href="lodging.html">하숙</a>
+          <a href="ma.html">기숙사</a>
+          <a href="public.html">정부 주택 관련 정보</a>
         </div>
       </li>
-      <li><a style="line-height: 130px;
-  color: black;
-  padding: 0 15px;
-  display: block;" href="contact.html">CONTACT</a></li>
-      <li><a style="line-height: 130px;
-  color: black;
-  padding: 0 15px;
-  display: block;" href="#">LOGIN</a></li>
+      <li><a href="community.html">COMMUNITY</a></li>
+      <li><a href="#">CONTACT</a></li>
+      <li><a href="#">LOGIN</a></li>
     </ul>
   </div>
 </header>
 
-<br><br><br><br>
-
-<div class="container">
-  <div>total: <span th:text="${boards.totalElements}"></span>
-    <form class="form-inline d-flex justify-content-end" method="GET" th:action="@{/board/list}">
-      <div class="form-group mx-sm-3 mb-2">
-        <label for="searchText" class="sr-only">search</label>
-        <input type="text" class="form-control" id="searchText" name="searchText" th:value="${param.searchText}">
-      </div>
-      <button type="submit" class="btn btn-light mb-2">검색</button>
-      <br>
-    </form>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th scope="col">NO.</th>
-        <th scope="col">Title</th>
-        <th scope="col">Writer</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="board: ${boards}">
-        <td th:text ="${board.id}">Mark</td>
-        <td><a th:text ="${board.title}" th:href="@{/board/form (id=${board.id})}">Otto </a> </td>
-        <td>정지우 </td>
-      </tr>
-
-      </tbody>
-    </table>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li class="page-item" th:classappend="${1==boards.pageable.pageNumber+1}? 'disabled'">
-          <a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber-1},searchText=${param.searchText})}" tabindex="-1" aria-daisabled="ture">Previous</a>
-        </li>
-        <li class="page-item " th:classappend="${i==boards.pageable.pageNumber+1}? 'disabled'" th:each="i :${#numbers.sequence(startPage,endPage)}">
-          <a class="page-link" href="#" th:href="@{/board/list(page=${i-1},searchText=${param.searchText})}" th:text="${i}">1</a>
-        </li>
-        <li class="page-item" th:classappend="${boards.totalPages==boards.pageable.pageNumber+1}? 'disabled'" >
-          <a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber+1},searchText=${param.searchText})}">Next</a>
-        </li>
-      </ul>
-    </nav>
-    <div class ="text-right">
-      <a type="button" class="btn btn-primary" th:href="@{/board/form}">글쓰기</a>
-    </div>
-  </div>
-
-</div>
-<script type="text/javascript" src="../js/dropbar.js">
-</script>
+<script type="text/javascript" src="../js/dropbar.js"></script>
 </body>
 </html>
