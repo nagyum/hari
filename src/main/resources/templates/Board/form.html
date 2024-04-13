@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!--    <link href="starter-template.css" th:href="@{/starter-template.css}" rel="stylesheet">-->
+    <link rel="stylesheet" href="../css/style.css">
+    <title th:text="${title}">Hello, Spring Boot!</title>
+    <style>
+        body{
+            padding-top: 3rem;
+        }
+        .starter-template{
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:replace="fragments/common :: menu('board')">
+</nav>
+<div class="container">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h2>게시판</h2>
+    <form action="#" th:action="@{/board/form}" th:object="${board}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label for="title">제목</label>
+            <input type="text" class="form-control" th:classappend="${#fields.hasErrors('title')} ? 'is-invalid' " id="title" th:field="*{title}">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                제목 에러메세지
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="content">내용</label>
+            <textarea class="form-control" th:classappend="${#fields.hasErrors('content')} ? 'is-invalid' " id="content" rows="3" th:field="*{content}"></textarea>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">
+                제목 에러메세지
+            </div>
+        </div>
+        <div class ="text-right">
+            <a type="button" class="btn btn-dark" th:href="@{/board/list}">취소</a>
+            <button type="button" class="btn btn-dark" th:onclick="|deleteBoard(*{id})|">삭제</button>
+            <button type="submit" class="btn btn-dark">확인</button>
+        </div>
+    </form>
+
+    <br/>
+    <div class="card">
+        <div class="card-header">댓글</div>
+        <ul id="reply--box" class="list-group" th:each="reply : ${board.replyList}">
+            <li class="list-group-item d-flex justify-content-between">
+                <div th:text="${reply.getContent()}"></div>
+                <div class="d-flex">
+                    <!--                    <span class="text-monospace mr-1">작성자: &nbsp;</span><div class="text-monospace mr-1" th:text="${reply.user.username}"></div>-->
+                    <button class="badge badge-dark">대댓글</button><span> | </span>
+                    <button class="badge badge-dark">수정</button><span> | </span>
+                    <button id="delete"  class="badge badge-dark" style="margin-left: 10px;">삭제</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <br>
+    <div class="card mb-2 mt-5">
+
+        <div class="card-header bg-light">
+            <i class="fa fa-comment fa"></i> 댓글
+        </div>
+        <form>
+            <div class="card-body">
+                <input type="hidden" id="boardId" th:value="${board.id}">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <textarea class="form-control" id="reply-content" rows="1"></textarea>
+                        <button id="reply-btn-save" type="button" class="btn btn-dark mt-3">등록</button>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <br>
+
+    <br>
+    <br>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"-->
+<!--        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"-->
+<!--        crossorigin="anonymous"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+<script>
+    function deleteBoard(id){
+        $.ajax({
+            url: '/api/boards/' + id,
+            type:'DELETE',
+            success:function (result){
+                alert("삭제되었습니다.");
+                window.location.href='/board/list';
+            }
+        })
+
+    }
+
+    let replyIndex = {
+        init: function () {
+            $("#reply-btn-save").on("click", () => {
+                this.replySave();
+            });
+            $("#delete").on("click", () => {
+                this.replyDelete();
+            });
+        },
+
+        replySave: function () {
+            const data = {
+                boardId : $("#boardId").val(),
+                content: $("#reply-content").val(),
+            }
+            console.log((data.boardId)*1);
+            var urls="/board/form/2";
+            $.ajax({
+                type: "POST",
+                url: urls,
+                data: data,
+                // contentType: "application/json; charset=utf-8",
+                dataType: "text"
+
+            }).done(function (res) {
+                console.log(res)
+                location.href = `/board/form?id=${data.boardId}`;
+            }).fail(function (err) {
+                console.log(JSON.stringify(err));
+            });
+        },
+
+        replyDelete: function (boardId, replyId) {
+            $.ajax({
+                type: "DELETE",
+                url: "/board/form/delete",
+                dataType: "text"
+            }).done(function (res) {
+                alert("댓글삭제가 완료되었습니다.");
+                location.href = `/board/form?id=${data.boardId}`;
+            }).fail(function (err) {
+                alert(JSON.stringify(err));
+            });
+        },
+
+    }
+    replyIndex.init();
+
+</script>
+</body>
+
+</html>
