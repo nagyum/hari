@@ -14,3 +14,17 @@ jQuery를 활용한 javascript에 익숙해지면서 관련 라이브러리를 �
 또한, 청년 주택이나 행복주택처럼 SH공사, LH공사에서 제공하는 주 거형태에 대한 정보도 제공한다.
 서비스의 대상층은 서울에 거주하게 된 대학생으로 이들에게 양질의 서비스를 제공하고자 한다.
 
+## 프로젝트 화면
+
+<img width="500" alt="스크린샷 2024-04-13 오후 2 04 36" src="https://github.com/nagyum/hari/assets/70081775/8301a6b6-c04f-4f56-80c3-7b2a8f3b5e3f">
+
+<img width="500" alt="스크린샷 2024-04-13 오후 2 04 55" src="https://github.com/nagyum/hari/assets/70081775/0886a14a-97e3-4746-bc33-97f51b4be435">
+
+<img width="500" alt="스크린샷 2024-04-13 오후 2 05 05" src="https://github.com/nagyum/hari/assets/70081775/a1cb609d-be2c-46fa-950f-f201c1744c94">
+
+<img width="500" alt="스크린샷 2024-04-13 오후 2 05 12" src="https://github.com/nagyum/hari/assets/70081775/d0cfccb9-
+c03d-4c7b-8210-b57df10f1629">
+
+<img width="500" alt="스크린샷 2024-04-13 오후 2 05 22" src="https://github.com/nagyum/hari/assets/70081775/726e4462-d17f-4464-bd7a-35a2a19043c4">
+
+<img width="500" alt="스크린샷 2024-04-13 오후 2 05 56" src="https://github.com/nagyum/hari/assets/70081775/43b78f50-8056-415e-a216-92ed40f461d7">
